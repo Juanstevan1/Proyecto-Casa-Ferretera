@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <script src="https://cdn.tailwindcss.com"></script>
+        <title>...</title>
+    </head>
+    <body>
+        <style>
+            .center {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+        </style>
+
+        <img class="fixed top-0 left-0 w-full h-screen object-cover -z-10" src="static/fondo.png" />
+    <form action="/uploadfiles/" method="get">
+        <div class="center w-[500px] p-10 bg-[#f8c738] rounded-lg shadow-lg">
+            <div class="p-10 flex flex-col gap-8 bg-white rounded-lg shadow-lg">
+                <div class="w-full flex flex-col gap-3">
+                    <img class="h-20" src="static/logo.svg" />
+                    <h1 class="text-center text-3xl text-[#f8c738] font-bold">INGRESO</h1>
+                </div>
+
+                <div class="w-full flex flex-col gap-3">
+                    <div
+                        class="flex items-center gap-3 px-3 py-2 border-b-4 border-black rounded-md bg-gray-200 shadow-inner"
+                    >
+                        <img class="w-[20px]" src="static/user-logo.svg" />
+                        <input
+                            id="email-input"
+                            type="email"
+                            placeholder="Usuario"
+                            class="w-full bg-transparent outline-none"
+                        />
+                    </div>
+                    <div
+                        class="flex items-center gap-3 px-3 py-2 border-b-4 border-black rounded-md bg-gray-200 shadow-inner"
+                    >
+                        <img class="w-[20px]" src="static/password-logo.svg" />
+                        <input
+                            id="password-input"
+                            type="password"
+                            placeholder="Contraseña"
+                            class="w-full bg-transparent outline-none"
+                        />
+                    </div>
+                </div>
+
+                <button
+                    type="submit"
+                    class="px-3 py-2 bg-[#f8c738] text-white font-semibold rounded-md shadow"
+                >
+                    Enviar
+                </button>
+
+                <div class="flex justify-between">
+                    <a href="/reset_password" class="text-sm text-gray-400">Olvidé mi contraseña</a>
+                    <span onclick="cleanForm()" class="text-sm text-gray-400 cursor-pointer">Limpiar formulario</span>
+                </div>
+
+                <a href="/register" class="text-center">Registrarse</a>
+            </div>
+        </div>
+    </form>
+
+        <script>
+            function cleanForm() {
+                document.getElementById('email-input').value = '';
+                document.getElementById('password-input').value = '';
+            }
+        </script>
+    </body>
+</html>
