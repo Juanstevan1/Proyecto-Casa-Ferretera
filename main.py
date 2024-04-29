@@ -61,7 +61,23 @@ def upload_files(req: Request):
         context= {"request":req}
     )
 
+@app.get("/login")
+def login(req: Request):
+    return template.TemplateResponse(
+        name = "index2.html",
+        context = {"request": req}
+    )
+
+@app.get("/main")
+async def read_root(req: Request):
+
+    return template.TemplateResponse(
+        name = "component.html",
+        context = {"request": req}
+    )
 @app.get("/")
 async def login(request: Request):
     return template.TemplateResponse("login.html", {"request": request})
-
+                                      
+async def root():
+    return 
