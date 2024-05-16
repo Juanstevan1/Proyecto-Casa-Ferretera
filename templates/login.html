@@ -18,7 +18,7 @@
         </style>
 
         <img class="fixed top-0 left-0 w-full h-screen object-cover -z-10" src="static/fondo.png" />
-    <form action="/uploadfiles/" method="get">
+    <form action="/Login" method="POST">
         <div class="center w-[500px] p-10 bg-[#f8c738] rounded-lg shadow-lg">
             <div class="p-10 flex flex-col gap-8 bg-white rounded-lg shadow-lg">
                 <div class="w-full flex flex-col gap-3">
@@ -32,8 +32,9 @@
                     >
                         <img class="w-[20px]" src="static/user-logo.svg" />
                         <input
-                            id="email-input"
-                            type="email"
+                            name="username" 
+                            id="username"
+                            type="text"
                             placeholder="Usuario"
                             class="w-full bg-transparent outline-none"
                         />
@@ -43,7 +44,8 @@
                     >
                         <img class="w-[20px]" src="static/password-logo.svg" />
                         <input
-                            id="password-input"
+                            name="password" 
+                            id="password"
                             type="password"
                             placeholder="Contraseña"
                             class="w-full bg-transparent outline-none"
@@ -70,7 +72,7 @@
 
         <script>
             function cleanForm() {
-                document.getElementById('email-input').value = '';
+                document.getElementById('username').value = '';
                 document.getElementById('password-input').value = '';
             }
         </script>
