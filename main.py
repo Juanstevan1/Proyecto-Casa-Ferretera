@@ -6,7 +6,9 @@ from typing import Annotated, Union
 from fastapi.responses import FileResponse
 from fastapi.responses import Response
 import pandas as pd
+import openpyxl
 import io 
+from Functions.DataFunctions import extracting_data
 
 app = FastAPI()
 
@@ -33,12 +35,13 @@ async def create_upload_files(
         # Aquí puedes procesar tus DataFrames como lo necesites
         # Por ejemplo, combinarlos, realizar cálculos, etc.
         # En este ejemplo, simplemente los combinaremos en un solo DataFrame
-        combined_df = pd.concat(dfs)
-
+        #combined_df = pd.concat(dfs)
+        new_df=extracting_data(dfs[0],dfs[1], dfs[2])
+        
         print("Generando archivo de salida...")
         # Guardar el nuevo DataFrame en un archivo de Excel en memoria
         output_excel = io.BytesIO()
-        combined_df.to_excel(output_excel, index=False)
+        new_df.to_excel(output_excel, index=False)
         output_excel.seek(0)
 
         print("Leyendo contenido del archivo generado en memoria...")
