@@ -32,68 +32,28 @@
 
         <div class="flex flex-wrap gap-10">
           <!-- Card -->
-          <div class="bg-white rounded-xl shadow-xl divide-y-2 divide-gray-300">
-            <div class="p-5 flex flex-col gap-3">
-              <div class="flex gap-10 justify-between items-center">
-                <span class="text-md">Bonificación Black+Decker</span>
-                <img
-                  class="h-[25px]"
-                  src="../static/tools.png"
-                />
-              </div>
-              <span class="text-3xl font-bold">85000</span>
-            </div>
-            <div class="p-5 flex flex-col gap-3">
-              <div class="flex items-center">
-                <div class="w-[73%] h-[5px] rounded-l-full bg-[#F8C738]"></div>
-                <span class="mx-2 text-xs font-semibold">73%</span>
-                <div class="w-[37%] h-[5px] rounded-r-full bg-gray-300"></div>
-              </div>
-              <span class="text-sm font-semibold">Avance de bonificiacion</span>
-            </div>
-          </div>
+         
           <!-- Card -->
-          <div class="bg-white rounded-xl shadow-xl divide-y-2 divide-gray-300">
-            <div class="p-5 flex flex-col gap-3">
-              <div class="flex gap-10 justify-between items-center">
-                <span class="text-md">Bonificación Black+Decker</span>
-                <img
-                  class="h-[25px]"
-                  src="../static/tools.png"
-                />
-              </div>
-              <span class="text-3xl font-bold">85000</span>
-            </div>
-            <div class="p-5 flex flex-col gap-3">
-              <div class="flex items-center">
-                <div class="w-[73%] h-[5px] rounded-l-full bg-[#F8C738]"></div>
-                <span class="mx-2 text-xs font-semibold">73%</span>
-                <div class="w-[37%] h-[5px] rounded-r-full bg-gray-300"></div>
-              </div>
-              <span class="text-sm font-semibold">Avance de bonificiacion</span>
-            </div>
-          </div>
-          <!-- Card -->
-          <div class="bg-white rounded-xl shadow-xl divide-y-2 divide-gray-300">
-            <div class="p-5 flex flex-col gap-3">
-              <div class="flex gap-10 justify-between items-center">
-                <span class="text-md">Bonificación Black+Decker</span>
-                <img
-                  class="h-[25px]"
-                  src="../static/tools.png"
-                />
-              </div>
-              <span class="text-3xl font-bold">85000</span>
-            </div>
-            <div class="p-5 flex flex-col gap-3">
-              <div class="flex items-center">
-                <div class="w-[73%] h-[5px] rounded-l-full bg-[#F8C738]"></div>
-                <span class="mx-2 text-xs font-semibold">73%</span>
-                <div class="w-[37%] h-[5px] rounded-r-full bg-gray-300"></div>
-              </div>
-              <span class="text-sm font-semibold">Avance de bonificiacion</span>
-            </div>
-          </div>
+          {% for key, value in plot_data.items() %}
+          
+<div class="bg-white rounded-xl shadow-xl divide-y-2 divide-gray-300">
+    <div class="p-5 flex flex-col gap-3">
+        <div class="flex gap-10 justify-between items-center">
+            <span class="text-md">{{ key }}</span>
+            <img class="h-[25px]" src="../static/tools.png" />
+        </div>
+        <span class="text-3xl font-bold">{{ value['Meta'] }}</span>
+    </div>
+    <div class="p-5 flex flex-col gap-3">
+        <div class="flex items-center">
+            <div class="w-[{{ value['Porcentaje'] }}%] h-[5px] rounded-l-full {%if value['Condicion']==1%} bg-[Green] {%else%} bg-[#F8C738] {%endif%} "></div>
+            <span class="mx-2 text-xs font-semibold">{{ value['Porcentaje'] }}%</span>
+            <div class="w-[{{ 100 - value['Porcentaje'] }}%] h-[5px] rounded-r-full bg-gray-300"></div>
+        </div>
+        <span class="text-sm font-semibold">Avance de bonificación</span>
+    </div>
+</div>
+{% endfor %}
           <!-- Card -->
         </div>
       </div>

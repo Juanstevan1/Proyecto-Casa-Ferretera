@@ -9,6 +9,10 @@ import pandas as pd
 import openpyxl
 import io 
 from Functions.DataFunctions import extracting_data
+from pymongo import MongoClient
+from pymongo import DESCENDING
+from pymongo import ASCENDING
+id_counter=0
 
 app = FastAPI()
 
@@ -32,18 +36,23 @@ async def create_upload_files(
             df = pd.read_excel(io.BytesIO(contents))  
             dfs.append(df)
 
-<<<<<<< HEAD
         # Aquí puedes procesar tus DataFrames como lo necesites
         # Por ejemplo, combinarlos, realizar cálculos, etc.
         # En este ejemplo, simplemente los combinaremos en un solo DataFrame
         #combined_df = pd.concat(dfs)
-        new_df=extracting_data(dfs[0],dfs[1], dfs[2])
-        
-=======
+        new_df, old, new=extracting_data(dfs[0],dfs[1], dfs[2])
+        client = MongoClient('mongodb+srv://Example:12345@casa.lvwjpfm.mongodb.net/?retryWrites=true&w=majority&appName=Casa')
+        db = client["Casa"]
+        collection1 = db["Statistics"]
+        # Convert DataFrame to list of dictionaries
+        records = new_df.to_dict(orient='records')
 
-        combined_df = pd.concat(dfs)
+        # Insert records into MongoDB
+        result = collection1.insert_many(records)
+        print(f'Inserted {len(result.inserted_ids)} records')
 
->>>>>>> a0426dfc8d3c8610c47a15787b8996c96da81a05
+        # Close connection
+        client.close()
         print("Generando archivo de salida...")
 
         output_excel = io.BytesIO()
@@ -71,10 +80,21 @@ def upload_files(req: Request):
 
 @app.get("/main")
 async def read_root(req: Request):
-
+    client = MongoClient('mongodb+srv://Example:12345@casa.lvwjpfm.mongodb.net/?retryWrites=true&w=majority&appName=Casa')
+    db = client["Casa"]
+    collection = db["Statistics"]
+    values=collection.distinct("AREA")
+    plot_data=dict()
+    for val in values:
+        last_document = collection.find_one(
+            filter={'AREA':val},
+            sort=[("_id", DESCENDING)]
+        )
+        plot_data[val]=last_document
+    print(plot_data,len(plot_data))
     return template.TemplateResponse(
         name = "component.html",
-        context = {"request": req}
+        context = {"request": req, "plot_data":plot_data}
     )
 @app.get("/")
 async def login(request: Request):
