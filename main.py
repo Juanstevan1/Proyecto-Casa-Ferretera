@@ -46,7 +46,7 @@ async def create_upload_files(
         collection1 = db["Statistics"]
         # Convert DataFrame to list of dictionaries
         records = new_df.to_dict(orient='records')
-
+        print(records)
         # Insert records into MongoDB
         result = collection1.insert_many(records)
         print(f'Inserted {len(result.inserted_ids)} records')
@@ -78,8 +78,10 @@ def upload_files(req: Request):
         context= {"request":req}
     )
 
-@app.get("/main")
-async def read_root(req: Request):
+
+
+@app.get("/main/{brand}")
+async def read_root(req: Request, brand:str):
     client = MongoClient('mongodb+srv://Example:12345@casa.lvwjpfm.mongodb.net/?retryWrites=true&w=majority&appName=Casa')
     db = client["Casa"]
     collection = db["Statistics"]
@@ -87,7 +89,7 @@ async def read_root(req: Request):
     plot_data=dict()
     for val in values:
         last_document = collection.find_one(
-            filter={'AREA':val},
+            filter={'AREA':val, 'Marca':brand},
             sort=[("_id", DESCENDING)]
         )
         plot_data[val]=last_document

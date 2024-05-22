@@ -14,8 +14,8 @@ def extracting_data(source_file, workers_direction, incentivos):
     new_file=extracted_df.merge(workers_df, how='left', on='Nombre vendedor')
     new_file=new_file[1:]
     new_file=new_file.drop(columns=['Nombre vendedor'])
-    new_file=new_file.groupby(['AREA' ])['Valor neto'].sum().reset_index()
     bonus_file=incentivos
+    new_file=new_file.groupby(['AREA'])['Valor neto'].sum().reset_index()
     for i in bonus_file.index:
         bonus_1=bonus_file.iloc[i,0]
         #print(new_file['AREA'])
