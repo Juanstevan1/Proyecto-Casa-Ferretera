@@ -8,12 +8,11 @@ client = MongoClient('mongodb+srv://Example:12345@casa.lvwjpfm.mongodb.net/?retr
 
 db = client["Casa"]
 
-collection = db["Usuarios"]
 
 
 async def login(name, password):
-    print(name)
-    print(password)
+    
+    collection = db["Usuarios"]
     try:
         user=collection.find_one({"Nombre": str(name), "cedula": int(password)})
         print(user)
@@ -22,5 +21,13 @@ async def login(name, password):
     if(user):
         if(user["Nombre"] == "CASA FERRETERA"):
             return "Admin"
-        return True
+        print(user)
+        return user['Area']
     return False
+
+
+async def Selfromdb(Area):
+    collection = db["Statistics"]
+    result = collection.find({"AREA":str(Area)})
+    return list(result)
+    
