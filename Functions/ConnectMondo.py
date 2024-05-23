@@ -1,11 +1,12 @@
 from pymongo import MongoClient
 
 client = MongoClient('mongodb+srv://Example:12345@casa.lvwjpfm.mongodb.net/?retryWrites=true&w=majority&appName=Casa')
-
 db = client["Casa"]
+collection = db["Statistics"]
 
-collection = db["Usuarios"]
+# Buscar documentos con AREA igual a "PTO. VENTA AMERICA"
+cursor = collection.find({"AREA": "PTO. VENTA AMERICA"})
 
-dc = collection.find_one({"Nombre": "MARIN LOPEZ MARIA CRISTINA", "cedula": 1020395640})
 
-print(dc)
+documents = list(cursor)
+print(documents)

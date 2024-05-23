@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Chart</title>
+
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body class="w-full h-screen bg-sky-50 p-20">
@@ -11,7 +12,7 @@
       <nav class="mb-10 flex items-center">
         <img class="w-[125px]" src="../static/logo.svg" />
         <div class="w-full justify-end flex gap-7">
-          <h1 class="text-lg font-semibold">WESTARCO</h1>
+          <h1 class="text-lg font-semibold">{{brand}}</h1>
           <a href="index.html" class="text-lg font-semibold">Inicio</a>
           <a href="support.html" class="text-lg font-semibold">Soporte</a>
           <a href="account.html" class="text-lg font-semibold">Mi Cuenta</a>
@@ -20,7 +21,9 @@
       </nav>
 
       <div class="flex">
-        <div class="transform -translate-x-[65px] p-4 flex flex-col gap-7 rounded-full bg-[#F8C738]">
+        <div
+          class="transform -translate-x-[65px] p-4 flex flex-col gap-7 rounded-full bg-[#F8C738]"
+        >
           <img class="w-[20px]" src="../static/bar-message.png" />
           <img class="w-[20px]" src="../static/bar-fact.png" />
           <img class="w-[20px]" src="../static/bar-signal.png" />
@@ -30,25 +33,28 @@
 
         <div class="flex flex-wrap gap-10">
           <!-- Card -->
-          {% for item in plot_data %}
-          <div class="bg-white rounded-xl shadow-xl divide-y-2 divide-gray-300">
-            <div class="p-5 flex flex-col gap-3">
-              <div class="flex gap-10 justify-between items-center">
-                <span class="text-md">{{ item['Marca'] }} - {{item['Nombre']}} {{item['Area']}}</span>
-                <img class="h-[25px]" src="../static/tools.png" />
-              </div>
-              <span class="text-3xl font-bold">{{ item['Meta'] }}</span>
-            </div>
-            <div class="p-5 flex flex-col gap-3">
-              <div class="flex items-center">
-                <div class="w-[{{ item['Porcentaje'] }}%] h-[5px] rounded-l-full {% if item['Porcentaje'] >= 100 %} bg-green-500 {% else %} bg-[#F8C738] {% endif %}"></div>
-                <span class="mx-2 text-xs font-semibold">{{ item['Porcentaje'] }}%</span>
-                <div class="w-[{{ 100 - item['Porcentaje'] }}%] h-[5px] rounded-r-full bg-gray-300"></div>
-              </div>
-              <span class="text-sm font-semibold">Avance de bonificación</span>
-            </div>
-          </div>
-          {% endfor %}
+         
+          <!-- Card -->
+          {% for key, value in plot_data.items() %}
+          
+<div class="bg-white rounded-xl shadow-xl divide-y-2 divide-gray-300">
+    <div class="p-5 flex flex-col gap-3">
+        <div class="flex gap-10 justify-between items-center">
+            <span class="text-md">{{ key }}</span>
+            <img class="h-[25px]" src="../static/tools.png" />
+        </div>
+        <span class="text-3xl font-bold">{{ value['Meta'] }}</span>
+    </div>
+    <div class="p-5 flex flex-col gap-3">
+        <div class="flex items-center">
+            <div class="w-[{{ value['Porcentaje'] }}%] h-[5px] rounded-l-full {%if value['Porcentaje']>=100 %} bg-[Green] {%else%} bg-[#F8C738] {%endif%} "></div>
+            <span class="mx-2 text-xs font-semibold">{{ value['Porcentaje'] }}%</span>
+            <div class="w-[{{ 100 - value['Porcentaje'] }}%] h-[5px] rounded-r-full bg-gray-300"></div>
+        </div>
+        <span class="text-sm font-semibold">{{value['last_date']}}</span>
+    </div>
+</div>
+{% endfor %}
           <!-- Card -->
         </div>
       </div>
