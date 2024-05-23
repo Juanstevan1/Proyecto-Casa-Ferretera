@@ -137,6 +137,16 @@ async def read_root(req: Request, brand:str):
                 )
                 last_document['last_date']=last_document['last_date'].date()
                 plot_data[val]=last_document
+            
+            values2=collection.distinct('Nombre')
+            for val in values2:
+                last_document = collection.find_one(
+                    filter={'Nombre':val, 'Marca':brand.upper()},
+                    sort=[("_id", DESCENDING)]
+                )
+                last_document['last_date']=last_document['last_date'].date()
+                plot_data[val]=last_document
+            
             return template.TemplateResponse(
                 name = "component2.html",
                 context = {"request": req, "plot_data":plot_data, 'brand':brand}
