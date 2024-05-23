@@ -18,10 +18,8 @@ template = Jinja2Templates(directory="templates")
 @app.post("/uploaded")
 async def create_upload_files(files: Annotated[list[UploadFile], File(description="Multiple files as UploadFile")]):
     try:
-        print("Recibiendo archivos...")
         dfs = []
         for file in files:
-            print(f"Procesando archivo: {file.filename.split('.')[0].split()[0]}")
             brand=file.filename.split('.')[0].split()[0]
             contents = await file.read()
             df = pd.read_excel(io.BytesIO(contents))
@@ -49,9 +47,7 @@ def upload_files(req: Request):
 @app.post("/uploadedbonus")
 async def create_upload_files(files: Annotated[list[UploadFile], File(description="Multiple files as UploadFile")]):
     try:
-        print("Recibiendo archivos...")
         for file in files:
-            print(f"Procesando archivo: {file.filename.split('.')[0].split()[0]}")
             brand=file.filename.split('.')[0].split()[0]
             contents = await file.read()
         df = pd.read_excel(io.BytesIO(contents))
@@ -68,7 +64,6 @@ async def create_upload_files(files: Annotated[list[UploadFile], File(descriptio
         df['last_date']=df['initial_time'][0]
         records = df.to_dict(orient='records')
         result = collection1.insert_many(records)
-        print(f'Inserted {len(result.inserted_ids)} records')
         client.close()
         return RedirectResponse(url="/main", status_code=303)
     except Exception as e:
@@ -84,9 +79,9 @@ def upload_files(req: Request):
 @app.post("/uploadedbonus/empl")
 async def create_upload_files(files: Annotated[list[UploadFile], File(description="Multiple files as UploadFile")]):
     try:
-        print("Recibiendo archivos...")
+        #print("Recibiendo archivos...")
         for file in files:
-            print(f"Procesando archivo: {file.filename.split('.')[0].split()[0]}")
+            #print(f"Procesando archivo: {file.filename.split('.')[0].split()[0]}")
             brand=file.filename.split('.')[0].split()[0]
             contents = await file.read()
         df = pd.read_excel(io.BytesIO(contents))
@@ -96,13 +91,13 @@ async def create_upload_files(files: Annotated[list[UploadFile], File(descriptio
         client = MongoClient('mongodb+srv://Example:12345@casa.lvwjpfm.mongodb.net/?retryWrites=true&w=majority&appName=Casa')
         db = client["Casa"]
         collection1 = db["Statistics2"]
-        collection1.delete_many({'Porcentaje':0})
+        collection1.delete_many({})
         df['Marca']=brand
         df['Porcentaje']=0
         df['last_date']=df['initial_time'][0]
         records = df.to_dict(orient='records')
         result = collection1.insert_many(records)
-        print(f'Inserted {len(result.inserted_ids)} records')
+        #print(f'Inserted {len(result.inserted_ids)} records')
         client.close()
         return RedirectResponse(url="/main", status_code=303)
     except Exception as e:
@@ -122,7 +117,6 @@ async def read_root(req: Request):
         return RedirectResponse(url="/", status_code=303)
     if location!='admin':
         values = await Selfromdb(location)
-        print(values)
         return template.TemplateResponse(name="component.html", context={"request": req, "plot_data": values})
     else:
         return RedirectResponse(url="/WESTARCO", status_code=303)
@@ -143,7 +137,6 @@ async def read_root(req: Request, brand:str):
                 )
                 last_document['last_date']=last_document['last_date'].date()
                 plot_data[val]=last_document
-            print(plot_data,len(plot_data))
             return template.TemplateResponse(
                 name = "component2.html",
                 context = {"request": req, "plot_data":plot_data, 'brand':brand}
