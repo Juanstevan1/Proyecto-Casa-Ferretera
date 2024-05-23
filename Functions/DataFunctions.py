@@ -59,8 +59,13 @@ def extracting_data(source_file, brand):
             new_file.loc[new_file['Area'] == instance['Area'], 'Porcentaje'] = num
             new_file.loc[new_file['Area'] == instance['Area'], 'Meta'] = meta
         except:
-            data={'Area': instance['Nombre'], 'Valor neto': meta, 'Condicion':parametro, 'Porcentaje':round(num), 'Meta':meta}
-            new_file=new_file.append(data, ignore_index=True)
+            data = {'Area': instance['Nombre'], 'Valor neto': meta, 'Condicion': parametro, 'Porcentaje': round(num), 'Meta': meta}
+            data_df = pd.DataFrame([data])
+            new_file = pd.concat([new_file, data_df], ignore_index=True)
+
+# Convert the data to a DataFrame
+
+# Concatenate the new data with the existing DataFrame
             
     print()
     new_file=new_file.dropna(subset=['Condicion'])
