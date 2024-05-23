@@ -91,7 +91,7 @@ async def create_upload_files(files: Annotated[list[UploadFile], File(descriptio
         client = MongoClient('mongodb+srv://Example:12345@casa.lvwjpfm.mongodb.net/?retryWrites=true&w=majority&appName=Casa')
         db = client["Casa"]
         collection1 = db["Statistics2"]
-        collection1.delete_many({})
+        
         df['Marca']=brand
         df['Porcentaje']=0
         df['last_date']=df['initial_time'][0]
@@ -99,7 +99,7 @@ async def create_upload_files(files: Annotated[list[UploadFile], File(descriptio
         result = collection1.insert_many(records)
         #print(f'Inserted {len(result.inserted_ids)} records')
         client.close()
-        return RedirectResponse(url="/main", status_code=303)
+        return RedirectResponse(url="/WESTARCO", status_code=303)
     except Exception as e:
         print(f"Error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
